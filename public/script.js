@@ -896,6 +896,19 @@ pokedexArray[807] =  'zeraora';
        console.log(error);
      }
    },
+   async addNewItem(){
+      try {
+        let result = await axios.post('/api/pokemons', {
+          name: this.name,
+          //path: image(),
+          description: this.type,
+        });
+        console.log(result);
+      //  this.addItem = result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   /* setPokemonName(){
      findPokedexNumber(this.pokemonName);
      this.number = this.pokedexNumber;
@@ -930,16 +943,6 @@ pokedexArray[807] =  'zeraora';
     randomPokemon() {
       this.number = this.getRandom(1, this.max);
     },
-    addComment() {
-       Vue.set(app.comments, this.number, new Array);
-     this.comments[this.number].push({
-       author: this.addedName,
-       text: this.addedComment,
-       date: moment().format('LLL')
-  });
-     this.addedName = '';
-     this.addedComment = '';
-   },
    setRating(rating){
      if (!(this.number in this.ratings))
        Vue.set(this.ratings, this.number, {

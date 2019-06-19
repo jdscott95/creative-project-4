@@ -9,50 +9,50 @@ const firebaseApp = firebase.initializeApp(
 const app = express();
 
 
-// Create a new item in the museum: takes a title and a path to an image.
+// Create a new pokemon in the museum: takes a name and a path to an image.
 var db = firebase.firestore();
-var itemsRef = db.collection('items');
+var pokemonsRef = db.collection('pokemons');
 
-app.post('/api/items', async (req, res) => {
+app.post('/api/pokemons', async (req, res) => {
     try {
-        let querySnapshot = await itemsRef.get();
+        let querySnapshot = await pokemonsRef.get();
         let numRecords = querySnapshot.docs.length;
-        let item = {
+        let pokemon = {
             id: numRecords + 1,
-            title: req.body.title,
-            path: req.body.path,
-            description: req.body.description,
+            name: req.body.name,
+      //      path: req.body.path,
+            description: req.body.type,
         };
-        itemsRef.doc(item.id.toString()).set(item);
-        res.send(item);
+        pokemonsRef.doc(pokemon.id.toString()).set(pokemon);
+        res.send(pokemon);
       } catch (error) {
         console.log(error);
         res.sendStatus(500);
       }
 });
 
-// Get a list of all of the items in the museum.
-app.get('/api/items', async (req, res) => {
+// Get a list of all of the pokemons in the museum.
+app.get('/api/pokemons', async (req, res) => {
     try{
-        let querySnapshot = await itemsRef.get();
+        let querySnapshot = await pokemonsRef.get();
         res.send(querySnapshot.docs.map(doc => doc.data()));
     }catch(err){
         res.sendStatus(500);
     }
 });
 
-app.delete('/api/items/:id', async (req, res) => {
+app.delete('/api/pokemons/:id', async (req, res) => {
     console.log('id: ', req.params.id);
     try{
-        let querySnapshot = await itemsRef.get();
+        let querySnapshot = await pokemonsRef.get();
         let records = querySnapshot.docs.length;
         let findId = req.params.id;
-        itemsRef.doc(findId).delete();
+        pokemonsRef.doc(findId).delete();
        if (findID !== records)
         {
           for (let i = (findID + 1); i < records; i++)
           {
-            itemsRef.docs(i.toString()).update({
+            pokemonsRef.docs(i.toString()).update({
               id: i - 1,
             })
           }
@@ -64,18 +64,18 @@ app.delete('/api/items/:id', async (req, res) => {
     }
 });
 
-app.put('/api/items/:id', async (req, res) => {
+app.put('/api/pokemons/:id', async (req, res) => {
     console.log('id: ', req.params.id);
     try{
-        let newTitle = req.body.title;
+        let newName = req.body.name;
         let newDescription = req.body.description;
-        console.log(req.body.title);
+        console.log(req.body.name);
         let findID = req.params.id;
-        itemsRef.doc(findID.toString()).update({
-            title: newTitle,
+        pokemonsRef.doc(findID.toString()).update({
+            name: newName,
             description: newDescription,
         })
-        let querySnapshot = await itemsRef.get();
+        let querySnapshot = await pokemonsRef.get();
         res.send(querySnapshot.docs.map(doc => doc.data()));
     }catch(err){
         console.log(err);

@@ -13,25 +13,9 @@
           <p>Loading...</p>
         </div>
         <div class = "center" v-else>
-          <p><b>Search Pokemon by Pokedex Number (1-807)</b></p>
-            <form v-on:submit.prevent="setPokemon">
-            <input type="text" v-model="pokedexNumber" class = "center">
-            <button type="submit" class = "center">Search</button>
-            </form>
-            <p><b>OR</b></p>
-            <p><b>Search Pokemon by Pokemon name (lowercase)</b></p>
-              <form v-on:submit.prevent="findPokedexNumber">
-              <input type="text" v-model="pokemonName" class = "center">
-              <button type="submit" class = "center">Search</button>
-              </form>
+        <h1>Here are your favorite Pokemon</h1>
           <p>
-          <button v-on:click="firstPokemon">First</button>
-          <button v-on:click="previousPokemon">Previous</button>
-          <button v-on:click="nextPokemon">Next</button>
-          <button v-on:click="lastPokemon">Last</button>
-          <button v-on:click="randomPokemon">Random</button>
-           <button @click="addNewItem">Add to Favorites</button>
-            <button><a href = "favorites.html">See Favorites</a></button>
+           <button><a href = "index.html">Back to Search</a></button>
         </p>
           <h2>{{current.name}}</h2>
           <img v-bind:src="image" v-bind:alt="current.alt" idth = "80" heigth = "80" class = "center">
